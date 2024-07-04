@@ -1,10 +1,9 @@
-from typing import List, Tuple
-
-import matplotlib.pyplot as plt
 import numpy as np
+from typing import List, Tuple
 import sounddevice as sd
-from loguru import logger
 from scipy.signal import chirp, find_peaks
+import matplotlib.pyplot as plt
+from swarms.utils.loguru_logger import logger
 
 
 class SonarVisionMappingSystem:
@@ -19,6 +18,7 @@ class SonarVisionMappingSystem:
         num_directions (int): Number of horizontal directions to scan.
         elevation_angles (int): Number of vertical angles to scan.
     """
+
     def __init__(
         self,
         fs: int = 44100,
@@ -104,7 +104,9 @@ class SonarVisionMappingSystem:
                 distances = self.process_signal(response)
                 self.responses.append(response)
                 self.distances.append((distances, h_angle, v_angle))
-                logger.info(f"Collected data for h_angle={h_angle}, v_angle={v_angle}")
+                logger.info(
+                    f"Collected data for h_angle={h_angle}, v_angle={v_angle}"
+                )
 
     def plot_3d_mapping(self) -> None:
         """
@@ -141,7 +143,7 @@ class SonarVisionMappingSystem:
         """
         logger.info("Starting SonarVisionMappingSystem")
         self.collect_data()
-    
+
         logger.info("Data collection completed")
         logger.info("Plotting 3D mapping")
         self.plot_3d_mapping()
