@@ -141,5 +141,8 @@ class SonarVisionMappingSystem:
         """
         logger.info("Starting SonarVisionMappingSystem")
         self.collect_data()
+    
+        logger.info("Data collection completed")
+        logger.info("Plotting 3D mapping")
         self.plot_3d_mapping()
         logger.info("SonarVisionMappingSystem completed")
