@@ -1,64 +1,79 @@
 [![Multi-Modality](agorabanner.png)](https://discord.com/servers/agora-999382051935506503)
 
-# Python Package Template
-A easy, reliable, fluid template for python packages complete with docs, testing suites, readme's, github workflows, linting and much much more
+# Sonar Vision Mapping System
 
+This project aims to recreate the vision mapping system inspired by Batman in "The Dark Knight." The system uses high-frequency sound pulses to create a real-time, three-dimensional map of an environment. It is designed for applications in security, surveillance, and search-and-rescue operations.
 
-## Installation
+## Features
 
-You can install the package using pip
+- Emit ultrasonic chirp signals
+- Record echoes and process the response
+- Calculate distances to objects based on echo timings
+- Construct and visualize a 3D point cloud of the environment
 
+## Requirements
+
+- Python 3.6+
+- `numpy`
+- `sounddevice`
+- `scipy`
+- `matplotlib`
+
+# Install
 ```bash
-pip install -e .
+$ pip install svms
 ```
 
-# Usage
+## Usage
 ```python
-print("hello world")
+
+from svms.main import SonarVisionMappingSystem
+
+# Example usage
+sonar_system = SonarVisionMappingSystem()
+sonar_system.run()
 
 ```
 
 
 
-### Code Quality 🧹
+This script will emit ultrasonic pulses, record the echoes, and visualize the 3D point cloud of the environment.
 
-- `make style` to format the code
-- `make check_code_quality` to check code quality (PEP8 basically)
-- `black .`
-- `ruff . --fix`
+## Code Overview
 
-### Tests 🧪
+### `SonarVisionMappingSystem` Class
 
-[`pytests`](https://docs.pytest.org/en/7.1.x/) is used to run our tests.
+The main functionality is encapsulated in the `SonarVisionMappingSystem` class. Here's a breakdown of the key methods:
 
-### Publish on PyPi 🚀
+- `__init__(self, fs=44100, duration=0.5, f0=20000, f1=20000, num_directions=36, elevation_angles=9)`: Initializes the system with sampling frequency, duration, and frequency range for the chirp signal, along with the number of directions and elevation angles for mapping.
 
-**Important**: Before publishing, edit `__version__` in [src/__init__](/src/__init__.py) to match the wanted new version.
+- `generate_chirp_signal(self)`: Generates a chirp signal.
 
+- `record_response(self)`: Emits the chirp signal and records the response.
+
+- `process_signal(self, response)`: Processes the recorded response to find echoes and calculate distances.
+
+- `collect_data(self)`: Collects responses and distances for multiple directions and elevation angles.
+
+- `plot_3d_mapping(self)`: Plots the 3D point cloud of the environment.
+
+- `run(self)`: Runs the complete process of data collection and 3D mapping.
+
+### Example Usage
+
+```python
+sonar_system = SonarVisionMappingSystem()
+sonar_system.run()
 ```
-poetry build
-poetry publish
-```
 
-### CI/CD 🤖
+## Safety Considerations
 
-We use [GitHub actions](https://github.com/features/actions) to automatically run tests and check code quality when a new PR is done on `main`.
+The system uses ultrasonic frequencies (20 kHz), which are generally considered safe. However, ensure that the intensity of the emitted pulses is within safe limits, and avoid prolonged exposure to ultrasonic waves.
 
-On any pull request, we will check the code quality and tests.
+## Contributing
 
-When a new release is created, we will try to push the new code to PyPi. We use [`twine`](https://twine.readthedocs.io/en/stable/) to make our life easier. 
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
-The **correct steps** to create a new realease are the following:
-- edit `__version__` in [src/__init__](/src/__init__.py) to match the wanted new version.
-- create a new [`tag`](https://git-scm.com/docs/git-tag) with the release name, e.g. `git tag v0.0.1 && git push origin v0.0.1` or from the GitHub UI.
-- create a new release from GitHub UI
+## License
 
-The CI will run when you create the new release.
-
-# Docs
-We use MK docs. This repo comes with the zeta docs. All the docs configurations are already here along with the readthedocs configs.
-
-
-
-# License
-MIT
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
